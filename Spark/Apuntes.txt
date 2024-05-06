@@ -1,0 +1,276 @@
+# docker-compose build  
+# docker-compose up -d
+
+
+pip3 install kafka-python==2.0.2
+
+
+###############
+### Spark   ### contenedor spark-spark-master-1 #
+###############
+                                                                                                          
+# cd '.\Tema 4\'
+# cd .\Spark\
+# docker exec -it cb430cd4f9efbef8687f7aebe43e48e079d3b56863b50cfb330b934efc20927b /bin/bash   # casa  
+# docker exec -it 296f24ddfe050cf2c3e6a4e59ce62af4e4c64ab3778606eb4e0f8c86ed036edc /bin/bash   # clase
+# cd /opt/spark-apps     cd /opt/spark-data/sales
+# python prueba.py
+
+
+
+#################
+### Postgress ###
+#################
+    # psql -U postgres
+    # create database retail_db;      # create database warehouse_retail_db;        # create database primord_db;
+    # \c retail_db                    # \c warehouse_retail_db                      # \c primord_db
+    # \l                                -> para ver las bases de datos
+    # \dt                               -> para ver las tablas
+    # DROP DATABASE mi_base_de_datos;
+    # \q o \quit
+    # DROP TABLE IF EXISTS stores;
+
+Pendiente:
+psql -h localhost -p 9999 -U primOrd -d PrimOrd
+CREATE DATABASE PrimOrd;
+
+Puerto BBDD: 9999
+● Nombre BBDD: PrimOrd
+● Nombre usuario: primOrd
+● Password usuario: bdaPrimOrd
+
+
+
+#Crear una base de datos:
+    psql -h localhost -p 9999 -U primOrd -d PrimOrd -W    # para la contraseña
+
+
+
+
+
+######
+Librerías
+######
+
+# python3 -m pip install numpy
+# python3 -m pip install pandas>=1.0.5
+# pip3 install sqlalchemy
+
+# Por pasos...dentro del contenedor spark
+# https://stackoverflow.com/questions/40809221/no-module-named-psycopg2
+# apt-get install libpq-dev
+# pip3 install psycopg2
+
+
+Para el contenedor de spark
+# pip3 install --upgrade pandas==1.0.5
+# pip3 install s3fs
+
+
+### Entrar al locastack ##
+
+# docker exec -it cb430cd4f9efbef8687f7aebe43e48e079d3b56863b50cfb330b934efc20927b /bin/bash    # casa
+# docker exec -it 296f24ddfe050cf2c3e6a4e59ce62af4e4c64ab3778606eb4e0f8c86ed036edc /bin/bash    # clase
+
+    # Crear un bucket por comando    ---> awslocal s3api create-bucket --bucket my-local-bucket
+    # Listar los archivos del bucket ---> awslocal s3 ls s3://my-local-bucket
+
+# Ver el contenido de un bucket         ---> awslocal s3api list-objects --bucket my-local-bucket
+# Eliminar un archivo de un bucket      ---> aws s3 rm s3://my-local-bucket/sales_data1.csv
+# Listar los buckets                    ---> awslocal s3api list-buckets
+# Eliminar el bucket                    ---> awslocal s3 rb s3://my-local-bucket --force
+
+
+
+# aws configure
+AWS Access Key ID [****************test]: test
+AWS Secret Access Key [****************test]: test
+Default region name [us-east-1]: us-east-1
+Default output format [json]: json
+
+
+# Listar lo que hay debajo de la carpeta prueba
+awslocal s3 ls s3://my-local-bucket/prueba/
+
+
+
+aws s3 ls s3://my-local-bucket/
+
+
+# Configurar credenciales  ---> aws configure
+# Resetear credenciales                 ---> rm ~/.aws/config ~/.aws/credentials   
+# Listar credenciales                   ---> cat ~/.aws/credentials
+
+
+
+# Para copiar archivos
+docker cp C:/raul.png 103c83f8025d622b5fe5b812637aacf9b5fee1a20884cd34dd54bf9c14ec9b62:/opt/code/localstack/
+Successfully copied 82.4kB to 90311ea633f9c9432dcdb4f63e39c8831bdbb4a130f4aa9394b29549358a4a30:/opt/code/localstack/
+
+
+# Copiar archivos de C:/ a localstack
+# docker cp C:/copiardelocastackabucket.txt 90311ea633f9c9432dcdb4f63e39c8831bdbb4a130f4aa9394b29549358a4a30:/opt/code/localstack/
+# root@90311ea633f9:/opt/code/localstack# python fabricarcsv.py
+# root@90311ea633f9:/opt/code/localstack# python procesar.py
+
+
+# En docker
+# ver el contenido de un csv de dentro de un bucket
+# awslocal s3 cp s3://my-local-bucket/sales_data.csv -
+# awslocal s3 cp s3://my-local-bucket/sales_data_procesado.csv/ -
+
+
+
+# Importar librerias
+# python3 -m pip install psycopg2
+
+
+
+
+Para guia de locastack
+https://docs.localstack.cloud/user-guide/aws/s3/
+
+
+
+
+- Conectar mysql con spark.
+- Coger datos en Mongo y meterlos a un archivo.
+- Coger datos de Neu4j y meterlos a un archivo y los cargamos en Spark.  Leer ese archivo y meterlo en el cluster.
+
+
+
+result_df \
+    .write \
+    .partitionBy('my_column') \
+    .option('fs.s3a.committer.name', 'partitioned') \
+    .option('fs.s3a.committer.staging.conflict-mode', 'replace') \
+    .option("fs.s3a.fast.upload.buffer", "bytebuffer") \ # Buffer in memory instead of disk, potentially faster but more memory intensive
+    .mode('overwrite') \
+    .csv(path='s3a://mybucket/output', sep=',')
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+git status                          # Verificar el estado del repositorio local
+git add *                           # Añadir todos los cambios al área de preparación
+git commit -m "Mensaje del commit"  # Hacer un commit de los cambios
+git push                            # Realizar el push de los cambios a la rama principal del r
+
+
+
+# Producer  python3
+& C:/Users/Adrian/AppData/Local/Microsoft/WindowsApps/python3.10.exe "./Tema 4/Spark/apps/AdriKafka/Modo2/kafka_producer.py"
+
+# Consumer python
+& C:/Users/Adrian/AppData/Local/Microsoft/WindowsApps/python3.10.exe "./Tema 4/Spark/apps/AdriKafka/Modo2/kafka_consumer.py"
+
+
+
+
+### MONGO ###
+pip show pymongo
+pip install --upgrade pymongo
+
+
+### MYSQL ###
+mysql -u root -p       alberite
+show databases;
+create database retail_db;
+use retail_db;
+drop table clientes;
+
+
+
+pip install py2neo
+
+
+
+
+### Ver el contenido de un archivo virtual ###
+    awslocal s3 cp s3://my-local-bucket/dataPokemon.json ./dataPokemon.json 
+    cat dataPokemon.json   # En sistemas Unix-like
+    type dataPokemon.json  # En Windows
+
+# WSL --shutdown   liberación de espacio docker
+
+
+https://www.youtube.com/watch?v=wHlaP8pr4uI
+
+
+
+
+pip install awscli-local
+
+
+
+
+
+
+
+
+
+# Leer un Dataframe
+def leerResultados(resultado):
+    store_id = None
+    if not resultado.isEmpty():
+        row = resultado.collect()[0]
+        store_id = row["store_id"]
+        store_name = row["store_name"]
+        location = row["location"]
+        demographics = row["demographics"]
+        
+        print("store_id:", store_id)
+        print("store_name:", store_name)
+        print("location:", location)
+        print("demographics:", demographics)
+        print()
+
+
+
+
+
+
+
+
+
+
+
+
+
+Neo4j
+Eliminar los registros ---> MATCH (n:Platos) DETACH DELETE n
+
+
+
+
+
+# Leer un json
+df = spark.read.json("./../../data_Prim_ord/json/restaurantes.json")
+# Formas de leer https://www.diegocalvo.es/leer-y-escribir-json-en-python/
+
+
+
+
+# Create a bucket (Mirar a ver si hay un archivo python que contemple esto)
+'''import boto3
+s3 = boto3.client('s3', endpoint_url='http://localhost:4566', aws_access_key_id='test', aws_secret_access_key='test',region_name='us-east-1')
+bucket_name = 'my-local-bucket'                     
+s3.create_bucket(Bucket=bucket_name)'''
+
+
+
+
+PS C:\Users\Adrian\Downloads\BDA_Adrian> git reset --soft HEAD~1
+PS C:\Users\Adrian\Downloads\BDA_Adrian> git reset HEAD .
+git rm --cached 'Tema 4/Spark/cont_Neo4j/transactions/neo4j/neostore.transaction.db.0'
+git rm --cached 'Tema 4/Spark/cont_Neo4j/transactions/system/neostore.transaction.db.0'

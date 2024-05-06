@@ -1,0 +1,2 @@
+id,timestamp,id_cliente,fecha_llegada,fecha_salida,tipo_habitacion,preferencias_comida,id_restaurante
+*** Reserva 151***,1714499904996, 64, 2024-03-16, 2024-03-21, Individual, Sin gluten, 35
